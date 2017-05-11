@@ -36,10 +36,10 @@
             this.lblEnterCalculations = new System.Windows.Forms.Label();
             this.lblSelectLine = new System.Windows.Forms.Label();
             this.pnlAddChanges = new System.Windows.Forms.Panel();
-            this.txtValue = new System.Windows.Forms.TextBox();
-            this.btnUpdate = new System.Windows.Forms.Button();
-            this.btnDelete = new System.Windows.Forms.Button();
             this.btnInsert = new System.Windows.Forms.Button();
+            this.btnDelete = new System.Windows.Forms.Button();
+            this.btnUpdate = new System.Windows.Forms.Button();
+            this.txtValue = new System.Windows.Forms.TextBox();
             this.menuStrip1.SuspendLayout();
             this.pnlAddChanges.SuspendLayout();
             this.SuspendLayout();
@@ -65,7 +65,7 @@
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(92, 22);
             this.exitToolStripMenuItem.Text = "E&xit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -114,21 +114,15 @@
             this.pnlAddChanges.Size = new System.Drawing.Size(228, 130);
             this.pnlAddChanges.TabIndex = 5;
             // 
-            // txtValue
+            // btnInsert
             // 
-            this.txtValue.Location = new System.Drawing.Point(37, 27);
-            this.txtValue.Name = "txtValue";
-            this.txtValue.Size = new System.Drawing.Size(151, 20);
-            this.txtValue.TabIndex = 0;
-            // 
-            // btnUpdate
-            // 
-            this.btnUpdate.Location = new System.Drawing.Point(16, 91);
-            this.btnUpdate.Name = "btnUpdate";
-            this.btnUpdate.Size = new System.Drawing.Size(61, 23);
-            this.btnUpdate.TabIndex = 1;
-            this.btnUpdate.Text = "Update";
-            this.btnUpdate.UseVisualStyleBackColor = true;
+            this.btnInsert.Location = new System.Drawing.Point(157, 91);
+            this.btnInsert.Name = "btnInsert";
+            this.btnInsert.Size = new System.Drawing.Size(57, 23);
+            this.btnInsert.TabIndex = 4;
+            this.btnInsert.Text = "Insert";
+            this.btnInsert.UseVisualStyleBackColor = true;
+            this.btnInsert.Click += new System.EventHandler(this.btnInsert_Click);
             // 
             // btnDelete
             // 
@@ -138,15 +132,24 @@
             this.btnDelete.TabIndex = 2;
             this.btnDelete.Text = "Delete";
             this.btnDelete.UseVisualStyleBackColor = true;
+            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
-            // btnInsert
+            // btnUpdate
             // 
-            this.btnInsert.Location = new System.Drawing.Point(157, 91);
-            this.btnInsert.Name = "btnInsert";
-            this.btnInsert.Size = new System.Drawing.Size(57, 23);
-            this.btnInsert.TabIndex = 4;
-            this.btnInsert.Text = "Insert";
-            this.btnInsert.UseVisualStyleBackColor = true;
+            this.btnUpdate.Location = new System.Drawing.Point(16, 91);
+            this.btnUpdate.Name = "btnUpdate";
+            this.btnUpdate.Size = new System.Drawing.Size(61, 23);
+            this.btnUpdate.TabIndex = 1;
+            this.btnUpdate.Text = "Update";
+            this.btnUpdate.UseVisualStyleBackColor = true;
+            this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click);
+            // 
+            // txtValue
+            // 
+            this.txtValue.Location = new System.Drawing.Point(37, 27);
+            this.txtValue.Name = "txtValue";
+            this.txtValue.Size = new System.Drawing.Size(151, 20);
+            this.txtValue.TabIndex = 0;
             // 
             // frmAddStrip
             // 
