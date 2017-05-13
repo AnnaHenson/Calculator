@@ -32,14 +32,14 @@
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lstCalculationLines = new System.Windows.Forms.ListBox();
-            this.txt = new System.Windows.Forms.TextBox();
+            this.txtValue = new System.Windows.Forms.TextBox();
             this.lblEnterCalculations = new System.Windows.Forms.Label();
             this.lblSelectLine = new System.Windows.Forms.Label();
             this.pnlAddChanges = new System.Windows.Forms.Panel();
             this.btnInsert = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
             this.btnUpdate = new System.Windows.Forms.Button();
-            this.txtValue = new System.Windows.Forms.TextBox();
+            this.txtReplacementValue = new System.Windows.Forms.TextBox();
             this.menuStrip1.SuspendLayout();
             this.pnlAddChanges.SuspendLayout();
             this.SuspendLayout();
@@ -77,12 +77,13 @@
             this.lstCalculationLines.Size = new System.Drawing.Size(190, 329);
             this.lstCalculationLines.TabIndex = 1;
             // 
-            // txt
+            // txtValue
             // 
-            this.txt.Location = new System.Drawing.Point(296, 100);
-            this.txt.Name = "txt";
-            this.txt.Size = new System.Drawing.Size(179, 20);
-            this.txt.TabIndex = 2;
+            this.txtValue.Location = new System.Drawing.Point(296, 100);
+            this.txtValue.Name = "txtValue";
+            this.txtValue.Size = new System.Drawing.Size(179, 20);
+            this.txtValue.TabIndex = 2;
+            this.txtValue.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txt_KeyPress);
             // 
             // lblEnterCalculations
             // 
@@ -108,7 +109,7 @@
             this.pnlAddChanges.Controls.Add(this.btnInsert);
             this.pnlAddChanges.Controls.Add(this.btnDelete);
             this.pnlAddChanges.Controls.Add(this.btnUpdate);
-            this.pnlAddChanges.Controls.Add(this.txtValue);
+            this.pnlAddChanges.Controls.Add(this.txtReplacementValue);
             this.pnlAddChanges.Location = new System.Drawing.Point(296, 237);
             this.pnlAddChanges.Name = "pnlAddChanges";
             this.pnlAddChanges.Size = new System.Drawing.Size(228, 130);
@@ -144,12 +145,12 @@
             this.btnUpdate.UseVisualStyleBackColor = true;
             this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click);
             // 
-            // txtValue
+            // txtReplacementValue
             // 
-            this.txtValue.Location = new System.Drawing.Point(37, 27);
-            this.txtValue.Name = "txtValue";
-            this.txtValue.Size = new System.Drawing.Size(151, 20);
-            this.txtValue.TabIndex = 0;
+            this.txtReplacementValue.Location = new System.Drawing.Point(37, 27);
+            this.txtReplacementValue.Name = "txtReplacementValue";
+            this.txtReplacementValue.Size = new System.Drawing.Size(151, 20);
+            this.txtReplacementValue.TabIndex = 0;
             // 
             // frmAddStrip
             // 
@@ -159,7 +160,7 @@
             this.Controls.Add(this.pnlAddChanges);
             this.Controls.Add(this.lblSelectLine);
             this.Controls.Add(this.lblEnterCalculations);
-            this.Controls.Add(this.txt);
+            this.Controls.Add(this.txtValue);
             this.Controls.Add(this.lstCalculationLines);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
@@ -180,14 +181,14 @@
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.ListBox lstCalculationLines;
-        private System.Windows.Forms.TextBox txt;
+        private System.Windows.Forms.TextBox txtValue;
         private System.Windows.Forms.Label lblEnterCalculations;
         private System.Windows.Forms.Label lblSelectLine;
         private System.Windows.Forms.Panel pnlAddChanges;
         private System.Windows.Forms.Button btnInsert;
         private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.Button btnUpdate;
-        private System.Windows.Forms.TextBox txtValue;
+        private System.Windows.Forms.TextBox txtReplacementValue;
     }
 }
 

@@ -5,15 +5,16 @@ using System.Runtime.Remoting.Messaging;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using AddStrip;
 
 namespace Calculator
 {
     class Calculation
     {
-        public Calculation(ListBoxlb)
+        public Calculation(ListBox lb)
         {
-       
+
             // Add a CalcLine object to ArrayList then redisplay calculations     
         }
 
@@ -38,20 +39,33 @@ namespace Calculator
 
         public CalcLine Find(int n)
         {
+            throw new NotImplementedException();
             // Repalce the nth CalcLine object in the ArrayList wwith new calc object
             // Redisplay the calculations
         }
 
+        /// <summary>
+        /// method : Replace
+        /// Insert new CalcLine object ArrayList immediately before the nth object
+        /// Redisplay the claculations
+        /// </summary>
+        /// <param name="newCalc">The new calculate.</param>
+        /// <param name="n">The n.</param>
         public void Replace(CalcLine newCalc, int n)
         {
-            // Insert new CalcLine object ArrayList immediately before the nth object
-            // Redisplay the claculations
+
         }
 
+        /// <summary>
+        /// method : Insert
+        /// Delete the nth CalcLine object in ArrayList
+        /// Redisplay the calculations
+        /// </summary>
+        /// <param name="newCalc">The new calculate.</param>
+        /// <param name="n">The n.</param>
         public void Insert(CalcLine newCalc, int n)
         {
-            // Delete the nth CalcLine object in ArrayList
-            // Redisplay the calculations
+
         }
 
         public void Delete(int n)
@@ -65,13 +79,16 @@ namespace Calculator
             //Then open the given file and convert lines of the file to a set of CalcLine objects held in ArrayList
             // Redisplay Calculations
         }
+
         public void LoadFromFile(string filename)
+        {
             // load string file name from the file
         }
 
 
 
     }
+}
     
 
 
