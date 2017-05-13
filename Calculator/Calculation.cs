@@ -1,78 +1,123 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Remoting.Messaging;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
+﻿// Class Purpose :
+// Name : Anna Henson
+// Date Written: 11/05/2017 12:21 PM
+
+using System.Collections;
 using System.Windows.Forms;
 using AddStrip;
 
 namespace Calculator
 {
-    class Calculation
+    internal class Calculation
     {
+        private readonly ListBox lstDisplay;
+        private readonly ArrayList theCalcs;
+
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="Calculation" /> class.
+        /// </summary>
+        /// <param name="lb">The lb.</param>
         public Calculation(ListBox lb)
         {
-
-            // Add a CalcLine object to ArrayList then redisplay calculations     
+            lstDisplay = lb;
+            theCalcs = new ArrayList();
         }
 
+        /// <summary>
+        ///     method : Add
+        ///     Clear the ArrayList and the ListBox
+        /// </summary>
+        /// <param name="cl">The cl.</param>
         public void Add(CalcLine cl)
         {
-            // Clear the ArrayList and the ListBox
+            theCalcs.Add(cl);
+            Redisplay();
         }
 
+        /// <summary>
+        ///     method : Clear
+        ///     Clear the array list and the listbox
+        /// </summary>
         public void Clear()
         {
-            // Clear ListBox 
-            // For each line in the calculation, if line is ordinary calculation add text version of CalcLine to ListBox and 
-            //  calculate result of the calculation so far.
-            // If line is for a total or subtotal add text for total or subtotal to ListBox
-            // If the line is for a total, the result of calculation so far is reset to zero
+            theCalcs.Clear();
+            lstDisplay.Items.Clear();
         }
 
         public void Redisplay()
         {
-            // Return a reference to the nth CalcLine object in ArrayList
-        }
-
-        public CalcLine Find(int n)
-        {
-            throw new NotImplementedException();
-            // Repalce the nth CalcLine object in the ArrayList wwith new calc object
-            // Redisplay the calculations
+            lstDisplay.Items.Clear();
+            double subTotal = 0;
+            foreach (var theCalc in theCalcs)
+            {
+                var calc = (CalcLine) theCalc;
+                if (calc.Op == Operator.subtotal)
+                {
+                    lstDisplay.Items.Add(subTotal);
+                }
+                else if (calc.Op == Operator.total)
+                {
+                    lstDisplay.Items.Add(subTotal);
+                    subTotal = 0;
+                }
+                else
+                {
+                    lstDisplay.Items.Add(calc.ToString());
+                    subTotal = calc.NextResult(subTotal);
+                }
+            }
         }
 
         /// <summary>
-        /// method : Replace
-        /// Insert new CalcLine object ArrayList immediately before the nth object
-        /// Redisplay the claculations
+        ///     method : Find
+        ///     Return a reference to the nth CalcLine object in ArrayList
+        /// </summary>
+        /// <param name="n">The n.</param>
+        /// <returns></returns>
+        public CalcLine Find(int n)
+        {
+            return (CalcLine) theCalcs[n];
+        }
+
+        /// <summary>
+        ///     method : Replace
+        ///     Repalce the nth CalcLine object in the ArrayList wwith new calc object
+        ///     Redisplay the calculations
         /// </summary>
         /// <param name="newCalc">The new calculate.</param>
         /// <param name="n">The n.</param>
         public void Replace(CalcLine newCalc, int n)
         {
-
+            theCalcs[n] = newCalc;
+            Redisplay();
         }
 
         /// <summary>
-        /// method : Insert
-        /// Delete the nth CalcLine object in ArrayList
-        /// Redisplay the calculations
+        ///     method : Insert
+        ///     Insert new CalcLine object ArrayList immediately before the nth object
+        ///     Redisplay the claculations
         /// </summary>
         /// <param name="newCalc">The new calculate.</param>
         /// <param name="n">The n.</param>
         public void Insert(CalcLine newCalc, int n)
         {
-
+            theCalcs.Insert(n - 1, newCalc);
+            Redisplay();
         }
 
+        /// <summary>
+        ///     method : Delete
+        ///     Delete the nth CalcLine object in ArrayList
+        ///     Redisplay the calculations
+        /// </summary>
+        /// <param name="n">The n.</param>
         public void Delete(int n)
         {
-            // Save all the CalcLine objects in ArrayList as lines of text in given file
+            theCalcs.RemoveAt(n);
+            Redisplay();
         }
 
+        // Save all the CalcLine objects in ArrayList as lines of text in given file
         public void SaveToFile(string filename)
         {
             // Clear the ArrayList
@@ -84,19 +129,5 @@ namespace Calculator
         {
             // load string file name from the file
         }
-
-
-
     }
 }
-    
-
-
-   
-
-
-
-
-
-
-

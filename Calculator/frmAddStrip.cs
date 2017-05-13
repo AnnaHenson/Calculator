@@ -25,14 +25,19 @@ namespace Calculator
 
         private void btnUpdate_Click(object sender, EventArgs e)
         {
+            var calc = new CalcLine(txtReplacementValue.Text);
+            calculation.Replace(calc, lstCalculationLines.SelectedIndex);
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
+            calculation.Delete(lstCalculationLines.SelectedIndex);
         }
 
         private void btnInsert_Click(object sender, EventArgs e)
         {
+            var calc = new CalcLine(txtReplacementValue.Text);
+            calculation.Insert(calc, lstCalculationLines.SelectedIndex);
         }
 
         private void txt_KeyPress(object sender, KeyPressEventArgs e)
@@ -58,7 +63,6 @@ namespace Calculator
                 {
                     calcLine = new CalcLine(txtValue.Text);
                     calculation.Add(calcLine);
-                    lstCalculationLines.Items.Add(txtValue.Text);
                     // Is is a char that needs to go to the start of the line
                     if (e.KeyChar == '+' || e.KeyChar == '-' || e.KeyChar == '*' || e.KeyChar == '/')
                     {
@@ -85,6 +89,11 @@ namespace Calculator
                     MessageBox.Show("You must enter a digit or #, +, -, *. /, or =", "Error");
                 }
             }
+        }
+
+        private void newToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            calculation.Clear();
         }
     }
 }
