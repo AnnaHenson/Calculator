@@ -3,7 +3,6 @@
 // Date Written: 06/05/2017 3:48 PM
 
 using System;
-using System.Diagnostics;
 using System.Windows.Forms;
 using AddStrip;
 
@@ -11,7 +10,8 @@ namespace Calculator
 {
     public partial class frmAddStrip : Form
     {
-        private Calculation calculation;
+        private readonly Calculation calculation;
+
         public frmAddStrip()
         {
             InitializeComponent();
@@ -25,23 +25,79 @@ namespace Calculator
 
         private void btnUpdate_Click(object sender, EventArgs e)
         {
-            var calc = new CalcLine(txtReplacementValue.Text);
-            calculation.Replace(calc, lstCalculationLines.SelectedIndex);
+            var calcLine = txtReplacementValue.Text;
+            var firstChar = calcLine[0];
+            if (firstChar == '+' || firstChar == '-')
+            {
+                var secondChar = calcLine[1];
+                if (char.IsDigit(secondChar))
+                {
+                    var lastChar = calcLine[calcLine.Length - 1];
+                    if (lastChar == '+' || lastChar == '-' || lastChar == '*' || lastChar == '/' || lastChar == '#' || lastChar == '=' || lastChar == '\r')
+                    {
+                        var calc = new CalcLine(calcLine);
+                        calculation.Replace(calc, lstCalculationLines.SelectedIndex);
+                    }
+                    else
+                    {
+                        MessageBox.Show("The terminating character must be a +, -, *,/,# or =");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("The characters immediately following the first character must be numeric", "Error");
+                }
+            }
+            else
+            {
+                MessageBox.Show("The first character must be a + or - ", "Error");
+            }
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            calculation.Delete(lstCalculationLines.SelectedIndex);
+            if (MessageBox.Show("Do you want to delete the selected line", "Warning", MessageBoxButtons.OKCancel)==DialogResult.OK)
+            {
+                calculation.Delete(lstCalculationLines.SelectedIndex);
+            }
         }
 
         private void btnInsert_Click(object sender, EventArgs e)
         {
-            var calc = new CalcLine(txtReplacementValue.Text);
-            calculation.Insert(calc, lstCalculationLines.SelectedIndex);
+            var calcLine = txtReplacementValue.Text;
+            var firstChar = calcLine[0];
+            if (firstChar == '+' || firstChar == '-')
+            {
+                var secondChar = calcLine[1];
+                if (char.IsDigit(secondChar))
+                {
+                    var lastChar = calcLine[calcLine.Length - 1];
+                    if (lastChar == '+' || lastChar == '-' || lastChar == '*' || lastChar == '/' || lastChar == '#' || lastChar == '=' || lastChar == '\r')
+                    {
+                        var calc = new CalcLine(calcLine);
+                        calculation.Insert(calc, lstCalculationLines.SelectedIndex);
+                    }
+                    else
+                    {
+                        MessageBox.Show("The terminating character must be a +, -, *,/,# or =");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("The characters immediately following the first character must be numeric", "Error");
+                }
+            }
+            else
+            {
+                MessageBox.Show("The first character must be a + or - ", "Error");
+            }
         }
 
         private void txt_KeyPress(object sender, KeyPressEventArgs e)
         {
+            // If they press the backspace let them.
+            if (e.KeyChar == '\b')
+                return;
             CalcLine calcLine = null;
             // 1st char in the line
             if (txtValue.Text.Length == 0)
@@ -67,11 +123,11 @@ namespace Calculator
                     if (e.KeyChar == '+' || e.KeyChar == '-' || e.KeyChar == '*' || e.KeyChar == '/')
                     {
                         txtValue.Text = e.KeyChar.ToString();
-                        txtValue.Select(1,1);
+                        txtValue.Select(1, 1);
                         e.Handled = true;
                         return;
                     } // Is it a subtotal
-                    else if (e.KeyChar == '#')
+                    if (e.KeyChar == '#')
                     {
                         calcLine = new CalcLine(Operator.subtotal);
                         calculation.Add(calcLine);
@@ -83,7 +139,7 @@ namespace Calculator
                     }
                     txtValue.Text = "";
                 }
-                else if (!Char.IsDigit(e.KeyChar))
+                else if (!char.IsDigit(e.KeyChar))
                 {
                     e.Handled = true;
                     MessageBox.Show("You must enter a digit or #, +, -, *. /, or =", "Error");
@@ -94,6 +150,17 @@ namespace Calculator
         private void newToolStripMenuItem_Click(object sender, EventArgs e)
         {
             calculation.Clear();
+        }
+
+        private void lstCalculationLines_SelectedValueChanged(object sender, EventArgs e)
+        {
+            var calcLine = calculation.Find(lstCalculationLines.SelectedIndex);
+            if (calcLine.Op != Operator.subtotal && calcLine.Op != Operator.total)
+                txtReplacementValue.Text = lstCalculationLines.SelectedItem.ToString().Replace(" ", "");
+            else if (calcLine.Op == Operator.subtotal)
+                txtReplacementValue.Text = "#";
+            else if (calcLine.Op == Operator.total)
+                txtReplacementValue.Text = "=";
         }
     }
 }
