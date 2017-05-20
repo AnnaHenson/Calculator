@@ -3,6 +3,8 @@
 // Date Written: 06/05/2017 3:48 PM
 
 using System;
+using System.IO;
+using System.Text;
 using System.Windows.Forms;
 using AddStrip;
 
@@ -56,7 +58,7 @@ namespace Calculator
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Do you want to delete the selected line", "Warning", MessageBoxButtons.OKCancel)==DialogResult.OK)
+            if (MessageBox.Show("Do you want to delete the selected line", "Warning", MessageBoxButtons.OKCancel) == DialogResult.OK)
             {
                 calculation.Delete(lstCalculationLines.SelectedIndex);
             }
@@ -161,6 +163,44 @@ namespace Calculator
                 txtReplacementValue.Text = "#";
             else if (calcLine.Op == Operator.total)
                 txtReplacementValue.Text = "=";
+        }
+
+        private void mnuSave_Click(object sender, EventArgs e)
+        {
+            if (dlgSave.FileName == String.Empty)
+            {
+                dlgSave.FileName = "Calculation1.cal";
+                if (dlgSave.ShowDialog() == DialogResult.OK)
+                {
+                    calculation.SaveToFile(dlgSave.FileName);
+                }
+            }
+            else
+            {
+                calculation.SaveToFile(dlgSave.FileName);
+            }
+        }
+
+        private void mnuOpen_Click(object sender, EventArgs e)
+        {
+            if (dlgOpen.ShowDialog() == DialogResult.OK)
+            {
+                calculation.LoadFromFile(dlgOpen.FileName);
+            }
+            dlgSave.FileName = dlgOpen.FileName;
+        }
+
+        private void mnuSaveAs_Click(object sender, EventArgs e)
+        {
+            if (dlgSave.FileName == String.Empty)
+            {
+                dlgSave.FileName = "Calaculation1.cal";
+            }
+
+            if (dlgSave.ShowDialog() == DialogResult.OK)
+            {
+                calculation.SaveToFile(dlgSave.FileName);
+            }
         }
     }
 }

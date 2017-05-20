@@ -3,6 +3,8 @@
 // Date Written: 11/05/2017 12:21 PM
 
 using System.Collections;
+using System.IO;
+using System.Text;
 using System.Windows.Forms;
 using AddStrip;
 
@@ -120,14 +122,31 @@ namespace Calculator
         // Save all the CalcLine objects in ArrayList as lines of text in given file
         public void SaveToFile(string filename)
         {
-            // Clear the ArrayList
-            //Then open the given file and convert lines of the file to a set of CalcLine objects held in ArrayList
-            // Redisplay Calculations
+            StreamWriter sw = new StreamWriter(filename);
+            StringBuilder sb = new StringBuilder();
+            foreach (var theCalc in theCalcs)
+            {
+                sb.AppendLine(theCalc.ToString());
+            }
+            sw.Write(sb.ToString());
+            sw.Close();
         }
 
+        // Clear the ArrayList
+        //Then open the given file and convert lines of the file to a set of CalcLine objects held in ArrayList
+        // Redisplay Calculations
         public void LoadFromFile(string filename)
         {
-            // load string file name from the file
+            Clear();
+            StreamReader sr = new StreamReader(filename);
+            string temp = sr.ReadLine();
+            while (temp != null)
+            {
+                var calc = new CalcLine(temp);
+                Add(calc);
+                temp = sr.ReadLine();
+            }
+            sr.Close();
         }
     }
 }
