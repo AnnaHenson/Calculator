@@ -28,9 +28,16 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmAddStrip));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuNew = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuOpen = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuSave = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuSaveAs = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
+            this.mnuPrint = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuExit = new System.Windows.Forms.ToolStripMenuItem();
             this.lstCalculationLines = new System.Windows.Forms.ListBox();
             this.txtValue = new System.Windows.Forms.TextBox();
@@ -41,14 +48,10 @@
             this.btnDelete = new System.Windows.Forms.Button();
             this.btnUpdate = new System.Windows.Forms.Button();
             this.txtReplacementValue = new System.Windows.Forms.TextBox();
-            this.mnuOpen = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnuSave = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnuSaveAs = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
-            this.mnuPrint = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
             this.dlgOpen = new System.Windows.Forms.OpenFileDialog();
             this.dlgSave = new System.Windows.Forms.SaveFileDialog();
+            this.dlgPrintPreview = new System.Windows.Forms.PrintPreviewDialog();
+            this.prtCalculation = new System.Drawing.Printing.PrintDocument();
             this.menuStrip1.SuspendLayout();
             this.pnlAddChanges.SuspendLayout();
             this.SuspendLayout();
@@ -84,6 +87,44 @@
             this.mnuNew.Size = new System.Drawing.Size(152, 22);
             this.mnuNew.Text = "&New";
             this.mnuNew.Click += new System.EventHandler(this.newToolStripMenuItem_Click);
+            // 
+            // mnuOpen
+            // 
+            this.mnuOpen.Name = "mnuOpen";
+            this.mnuOpen.Size = new System.Drawing.Size(152, 22);
+            this.mnuOpen.Text = "O&pen...";
+            this.mnuOpen.Click += new System.EventHandler(this.mnuOpen_Click);
+            // 
+            // mnuSave
+            // 
+            this.mnuSave.Name = "mnuSave";
+            this.mnuSave.Size = new System.Drawing.Size(152, 22);
+            this.mnuSave.Text = "&Save...";
+            this.mnuSave.Click += new System.EventHandler(this.mnuSave_Click);
+            // 
+            // mnuSaveAs
+            // 
+            this.mnuSaveAs.Name = "mnuSaveAs";
+            this.mnuSaveAs.Size = new System.Drawing.Size(152, 22);
+            this.mnuSaveAs.Text = "S&ave As...";
+            this.mnuSaveAs.Click += new System.EventHandler(this.mnuSaveAs_Click);
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(149, 6);
+            // 
+            // mnuPrint
+            // 
+            this.mnuPrint.Name = "mnuPrint";
+            this.mnuPrint.Size = new System.Drawing.Size(152, 22);
+            this.mnuPrint.Text = "&Print";
+            this.mnuPrint.Click += new System.EventHandler(this.mnuPrint_Click);
+            // 
+            // toolStripMenuItem2
+            // 
+            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(149, 6);
             // 
             // mnuExit
             // 
@@ -176,43 +217,6 @@
             this.txtReplacementValue.Size = new System.Drawing.Size(151, 20);
             this.txtReplacementValue.TabIndex = 0;
             // 
-            // mnuOpen
-            // 
-            this.mnuOpen.Name = "mnuOpen";
-            this.mnuOpen.Size = new System.Drawing.Size(152, 22);
-            this.mnuOpen.Text = "O&pen...";
-            this.mnuOpen.Click += new System.EventHandler(this.mnuOpen_Click);
-            // 
-            // mnuSave
-            // 
-            this.mnuSave.Name = "mnuSave";
-            this.mnuSave.Size = new System.Drawing.Size(152, 22);
-            this.mnuSave.Text = "&Save...";
-            this.mnuSave.Click += new System.EventHandler(this.mnuSave_Click);
-            // 
-            // mnuSaveAs
-            // 
-            this.mnuSaveAs.Name = "mnuSaveAs";
-            this.mnuSaveAs.Size = new System.Drawing.Size(152, 22);
-            this.mnuSaveAs.Text = "S&ave As...";
-            this.mnuSaveAs.Click += new System.EventHandler(this.mnuSaveAs_Click);
-            // 
-            // toolStripMenuItem1
-            // 
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(149, 6);
-            // 
-            // mnuPrint
-            // 
-            this.mnuPrint.Name = "mnuPrint";
-            this.mnuPrint.Size = new System.Drawing.Size(152, 22);
-            this.mnuPrint.Text = "&Print";
-            // 
-            // toolStripMenuItem2
-            // 
-            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(149, 6);
-            // 
             // dlgOpen
             // 
             this.dlgOpen.DefaultExt = "cal";
@@ -225,6 +229,21 @@
             this.dlgSave.DefaultExt = "cal";
             this.dlgSave.Filter = "Calc Files|*.cal";
             this.dlgSave.InitialDirectory = "c:\\temp";
+            // 
+            // dlgPrintPreview
+            // 
+            this.dlgPrintPreview.AutoScrollMargin = new System.Drawing.Size(0, 0);
+            this.dlgPrintPreview.AutoScrollMinSize = new System.Drawing.Size(0, 0);
+            this.dlgPrintPreview.ClientSize = new System.Drawing.Size(400, 300);
+            this.dlgPrintPreview.Document = this.prtCalculation;
+            this.dlgPrintPreview.Enabled = true;
+            this.dlgPrintPreview.Icon = ((System.Drawing.Icon)(resources.GetObject("dlgPrintPreview.Icon")));
+            this.dlgPrintPreview.Name = "dlgPrintPreview";
+            this.dlgPrintPreview.Visible = false;
+            // 
+            // prtCalculation
+            // 
+            this.prtCalculation.PrintPage += new System.Drawing.Printing.PrintPageEventHandler(this.prtCalculation_PrintPage);
             // 
             // frmAddStrip
             // 
@@ -272,6 +291,8 @@
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
         private System.Windows.Forms.OpenFileDialog dlgOpen;
         private System.Windows.Forms.SaveFileDialog dlgSave;
+        private System.Windows.Forms.PrintPreviewDialog dlgPrintPreview;
+        private System.Drawing.Printing.PrintDocument prtCalculation;
     }
 }
 

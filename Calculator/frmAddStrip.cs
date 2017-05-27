@@ -3,6 +3,7 @@
 // Date Written: 06/05/2017 3:48 PM
 
 using System;
+using System.Drawing;
 using System.IO;
 using System.Text;
 using System.Windows.Forms;
@@ -200,6 +201,36 @@ namespace Calculator
             if (dlgSave.ShowDialog() == DialogResult.OK)
             {
                 calculation.SaveToFile(dlgSave.FileName);
+            }
+        }
+
+        private void mnuPrint_Click(object sender, EventArgs e)
+        {
+            dlgPrintPreview.Show();
+        }
+
+        private void prtCalculation_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
+        {
+            Graphics g = e.Graphics;
+            int linesSoFarHeading = 0;
+            Font textFont = new Font("Arial", 10,FontStyle.Regular);
+            Font headingFont = new Font("Arial", 10, FontStyle.Regular);
+            Brush brush = new SolidBrush(Color.Black);
+            int leftMargin = e.MarginBounds.Left;
+            int topMargin = e.MarginBounds.Top;
+
+
+
+            // Heading
+            g.DrawString("Calculation", headingFont, brush, leftMargin, topMargin + linesSoFarHeading * textFont.Height);
+            linesSoFarHeading++;
+            linesSoFarHeading++;
+
+            for (int i = 0; i < lstCalculationLines.Items.Count; i++)
+            {
+                var calcLine = calculation.Find(i);
+                g.DrawString(calcLine.ToString(), textFont, brush, leftMargin, topMargin +(linesSoFarHeading * textFont.Height));
+                linesSoFarHeading++;
             }
         }
     }
