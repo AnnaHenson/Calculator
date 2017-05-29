@@ -153,6 +153,7 @@ namespace Calculator
         private void newToolStripMenuItem_Click(object sender, EventArgs e)
         {
             calculation.Clear();
+            dlgSave.FileName = String.Empty;
         }
 
         private void lstCalculationLines_SelectedValueChanged(object sender, EventArgs e)
